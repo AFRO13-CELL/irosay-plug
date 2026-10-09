@@ -32,4 +32,4 @@ RUN printf '%s\n' \
     
 EXPOSE 80
 
-CMD ["sh", "-c", "php artisan config:clear && php artisan migrate --force && if [ \"${RUN_CREATE_ADMIN:-false}\" = \"true\" ]; then php artisan app:create-admin-account || exit 1; fi && apache2-foreground"]
+CMD ["sh", "-c", "php artisan config:clear && php artisan migrate --force && if [ \"${RUN_CREATE_ADMIN:-false}\" = \"true\" ]; then php artisan db:seed --class=RolePermissionSeeder --force && php artisan app:create-admin-account || exit 1; fi && apache2-foreground"]
